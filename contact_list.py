@@ -1,4 +1,5 @@
 class ContactList():
+    all_contacts = []
     friends = []
     coworkers = []
     
@@ -6,6 +7,7 @@ class ContactList():
         self._name = name
         self._number = number
         self._relation = None
+        ContactList.all_contacts.append({'name': f'{self._name}', 'number': f'{self._number}'})
 
     def __str__(self) -> str:
         return f"{self._name}: {self._number}"
@@ -26,6 +28,11 @@ class ContactList():
             self._relation += f", {relation}"
 
     @staticmethod
+    def contacts() -> None:
+        print(f"\nAll Contacts:")
+        print(sorted(ContactList.all_contacts, key=lambda x: x['name']))
+
+    @staticmethod
     def my_friends() -> None:
         print(f"\nFriends:")
         print(sorted(ContactList.friends, key=lambda x: x['name']))
@@ -37,11 +44,16 @@ class ContactList():
 
     @staticmethod
     def remove_contact(contact) -> str:
+        for person in range(0, len(ContactList.all_contacts)):
+            if(contact == ContactList.all_contacts[person]['name']):
+                ContactList.all_contacts.pop(person)
+                break
+        
         for person in range(0, len(ContactList.friends)):
             if(contact == ContactList.friends[person]['name']):
                 ContactList.friends.pop(person)
                 break
-        
+
         for person in range(0, len(ContactList.coworkers)):
             if(contact == ContactList.coworkers[person]['name']):
                 ContactList.coworkers.pop(person)
@@ -77,9 +89,11 @@ dave.relation = "Coworker"
 ContactList.my_friends()
 ContactList.my_coworkers()
 ContactList.find_shared_contacts()
+ContactList.contacts()
 print("____________________________________________________________")
 print(ContactList.remove_contact('Alice'))
 print("____________________________________________________________")
 ContactList.my_friends()
 ContactList.my_coworkers()
 ContactList.find_shared_contacts()
+ContactList.contacts()
