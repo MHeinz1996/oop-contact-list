@@ -65,9 +65,8 @@ class ContactList():
     def find_shared_contacts() -> str:
         shared_list = []
         for i in ContactList.friends:
-            for j in ContactList.coworkers:
-                if i == j:
-                    shared_list.append(i)
+            if i in ContactList.coworkers:
+                shared_list.append(i)
         print("\nFriends I work with:")
         print(sorted(shared_list, key=lambda x: x['name']))
 
